@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Quick Start Guide to Tennis</title>
+    <style>
+        /* Professional Color Palette (Hard Court Style) */
+        :root {
+            --court-blue: #004c99;     /* Deep, official court blue */
+            --outer-green: #007f5f;    /* Classic deep tennis green for background */
+            --line-white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #f0f8ff;     /* Off-white for text on blue/green */
+            --accent-gold: #ffcc00;    /* Subtle gold accent for professionalism */
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif; /* Professional, clean font */
+            background-color: var(--outer-green);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--court-blue); /* Main court color */
+            border: 1px solid var(--line-white);
+            padding: 50px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            color: var(--text-light); /* Light text on the dark blue background */
+        }
+
+        /* --- Header and Title --- */
+        h1 {
+            color: var(--line-white);
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 5px;
+            border-bottom: 3px solid var(--accent-gold);
+            padding-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: var(--accent-gold);
+        }
+
+        /* --- Guide Section --- */
+        h2 {
+            color: var(--line-white);
+            font-size: 1.8em;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        ul {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0;
+            line-height: 1.8;
+        }
+
+        li {
+            margin-bottom: 20px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.1em;
+        }
+
+        /* Custom bullet point for professional look */
+        li::before {
+            content: '•';
+            color: var(--accent-gold);
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+        
+        strong {
+            color: var(--accent-gold);
+        }
+
+        /* --- Links Section --- */
+        .link-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--accent-gold);
+        }
+
+        .link-section a {
+            color: var(--line-white);
+            background-color: var(--outer-green);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        .link-section a:hover {
+            background-color: #009973; /* Slightly lighter green on hover */
+        }
+        
+        /* --- Registration Form --- */
+        .registration-form {
+            background-color: rgba(255, 255, 255, 0.95); /* Nearly white background for contrast */
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            color: var(--text-dark);
+        }
+
+        .registration-form h3 {
+            color: var(--court-blue);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"] {
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+            font-size: 1em;
+        }
+
+        .form-group button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--outer-green);
+            color: var(--line-white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #00664c;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Official Tennis Program Quick Start Guide</h1>
+        <p class="subtitle">Your Foundation for Success on the Court</p>
+        
+        <h2>I. The Essential Fundamentals</h2>
+        <ul>
+            <li><strong>The Ready Position:</strong> Always face the net with your knees slightly bent, feet moving subtly, and your racket held firmly in front of you. This ensures immediate reaction time.</li>
+            <li><strong>The Basic Grip (Continental):</strong> For beginner consistency, a Continental (or "hammer") grip is recommended for serves and volleys, providing versatility across strokes.</li>
+            <li><strong>The Serve Procedure:</strong> Begin by standing behind the baseline. Execute a controlled ball toss directly above your head and extend fully to strike the ball cleanly into the diagonal service box.</li>
+            <li><strong>Forehand Mechanics:</strong> Initiate the stroke with a shoulder turn, preparing the racket. Step into the ball and drive the racket face forward, accelerating through contact with a controlled follow-through.</li>
+            <li><strong>Backhand Strategy:</strong> Use either a two-handed or one-handed technique. The key is proper weight transfer—stepping forward and rotating your torso to generate power and stability.</li>
+            <li><strong>Scoring and Etiquette:</strong> Understand the traditional scoring sequence (Love, 15, 30, 40, Game). Always call the score clearly before serving and respect the boundaries and calls of your opponent.</li>
+        </ul>
+
+        <div class="link-section">
+            <h2>II. Recommended Equipment Partners</h2>
+            <p>Select a racket that matches your skill level and style from our approved suppliers.</p>
+            <a href="https://www.babolat.com/" target="_blank" rel="noopener noreferrer">Babolat</a>
+            <a href="https://www.wilson.com/en-us/tennis" target="_blank" rel="noopener noreferrer">Wilson</a>
+            <a href="https://www.head.com/en_US/tennis" target="_blank" rel="noopener noreferrer">HEAD</a>
+        </div>
+
+        <div class="registration-form">
+            <h3>III. Sign Up for Official Tennis Lessons</h3>
+            <p style="text-align: center; margin-bottom: 20px;">Ready to move beyond the basics? Register below to connect with a certified coach!</p>
+            <form action="#" method="POST"> <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Mailing Address</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="number">Phone Number</label>
+                    <input type="text" id="number" name="number" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Submit Registration</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+<iframe src="https://virginiasports.com/sports/mten/" width="500" height="3800"></iframe>
+
+<div class='tableauPlaceholder' id='viz1765214458380' style='position: relative'><noscript><a href='#'><img alt='Becker ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Be&#47;Becker_0&#47;Becker&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Becker_0&#47;Becker' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Be&#47;Becker_0&#47;Becker&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='_gl=1*1t4wss6*_ga*MTY2Mjk3MzExLjE3NjIwMzk2NTA.*_ga_8YLN0SNXVS*czE3NjUyMTQzODgkbzQkZzEkdDE3NjUyMTQ0MDYkajQyJGwwJGgw*_gcl_au*MjgxMTE1Njk1LjE3NjIwMzk2NTAuOTk4MTU3NDI4LjE3NjIwMzk2NTMuMTc2MjAzOTY1Mg..' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1765214458380');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.minWidth='1000px';vizElement.style.maxWidth='100%';vizElement.style.minHeight='7527px';vizElement.style.maxHeight=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</body>
+</html>

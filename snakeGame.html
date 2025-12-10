@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Snake Game</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #333;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        #game-board {
+            display: grid;
+            /* The grid will be dynamically set by JS based on the GRID_SIZE */
+            border: 5px solid #00ff00; /* Green border for the game area */
+            background-color: #111;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .grid-cell {
+            /* These dimensions are set dynamically in JS */
+            width: 20px;
+            height: 20px;
+        }
+
+        .snake {
+            background-color: #00ff00; /* Bright green snake */
+            border-radius: 2px;
+        }
+
+        .food {
+            background-color: #ff0000; /* Red food */
+            border-radius: 50%; /* Make it round */
+            transform: scale(0.8);
+        }
+
+        #score {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #00ff00;
+        }
+
+        #instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #aaa;
+        }
+
+        #message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px 40px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            font-size: 2em;
+            text-align: center;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <div id="score">Score: 0</div>
+    <div id="game-board"></div>
+    <div id="instructions">
+        Use **Arrow Keys** to move.<br>Press **Spacebar** to start/restart.
+    </div>
+    <div id="message">
+        Game Over! <br>Final Score: <span id="final-score">0</span>
+    </div>
+
+    <script>
+        // --- Game Configuration ---
+        const GRID_SIZE = 20; // 20x20 grid
+        const CELL_SIZE = 20; // 20 pixels per cell
+        const INITIAL_SPEED = 150; // Milliseconds per move (slower = bigger number)
+
+        // --- DOM Elements ---
+        const gameBoard = document.getElementById('game-board');
+        const scoreDisplay = document.getElementById('score');
+        const messageBox = document.getElementById('message');
+        const finalScoreDisplay = document.getElementById('final-score');
+
+        // --- Game State Variables ---
+        let snake = [{ x: 10, y: 10 }]; // Initial snake position (center)
+        let food = {};
+        let direction = 'right';
+        let nextDirection = 'right'; // For smoother key handling
+        let score = 0;
+        let gameInterval;
+        let gameIsRunning = false;
+        let currentSpeed = INITIAL_SPEED;
+
+        // --- Setup and Drawing Functions ---
+
+        /**
+         * Initializes the game board CSS grid layout.
+         */
+        function setupBoard() {
+            gameBoard.style.gridTemplateColumns = `repeat(${GRID_SIZE}, ${CELL_SIZE}px)`;
+            gameBoard.style.gridTemplateRows = `repeat(${GRID_SIZE}, ${CELL_SIZE}px)`;
+            gameBoard.style.width = `${GRID_SIZE * CELL_SIZE}px`;
+            gameBoard.style.height = `${GRID_SIZE * CELL_SIZE}px`;
+        }
+
+        /**
+         * Resets the game state variables to initial values.
+         */
+        function resetGame() {
+            snake = [{ x: 10, y: 10 }];
+            direction = 'right';
+            nextDirection = 'right';
+            score = 0;
+            currentSpeed = INITIAL_SPEED;
+            gameIsRunning = false;
+            scoreDisplay.textContent = 'Score: 0';
+            messageBox.style.display = 'none';
+            draw();
+            placeFood();
+        }
+
+        /**
+         * Draws the entire game state (snake and food) on the board.
+         */
+        function draw() {
+            gameBoard.innerHTML = ''; // Clear the board
+
+            // Draw Snake
+            snake.forEach(segment => {
+                const snakeElement = document.createElement('div');
+                snakeElement.style.gridRowStart = segment.y;
+                snakeElement.style.gridColumnStart = segment.x;
+                snakeElement.classList.add('snake');
+                gameBoard.appendChild(snakeElement);
+            });
+
+            // Draw Food
+            const foodElement = document.createElement('div');
+            foodElement.style.gridRowStart = food.y;
+            foodElement.style.gridColumnStart = food.x;
+            foodElement.classList.add('food');
+            gameBoard.appendChild(foodElement);
+        }
+
+        /**
+         * Generates a random position for the food, ensuring it's not on the snake.
+         */
+        function placeFood() {
+            let newFood;
+            do {
+                newFood = {
+                    x: Math.floor(Math.random() * GRID_SIZE) + 1,
+                    y: Math.floor(Math.random() * GRID_SIZE) + 1
+                };
+            } while (snake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
+            food = newFood;
+        }
+
+        // --- Game Logic Functions ---
+
+        /**
+         * Moves the snake one step in the current direction.
+         */
+        function move() {
+            direction = nextDirection;
+            const head = { ...snake[0] }; // Copy current head position
+
+            // Update head position based on direction
+            switch (direction) {
+                case 'up': head.y--; break;
+                case 'down': head.y++; break;
+                case 'left': head.x--; break;
+                case 'right': head.x++; break;
+            }
+
+            // Check for collision
+            if (isGameOver(head)) {
+                endGame();
+                return;
+            }
+
+            // Add the new head to the front of the snake
+            snake.unshift(head);
+
+            // Check for food consumption
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                scoreDisplay.textContent = 'Score: ' + score;
+                placeFood();
+                increaseSpeed(); // Speed up the game
+            } else {
+                // Remove the tail if no food was eaten
+                snake.pop();
+            }
+
+            draw();
+        }
+
+        /**
+         * Checks if the game is over (wall collision or self-collision).
+         * @param {object} head - The new position of the snake's head.
+         * @returns {boolean} True if collision detected.
+         */
+        function isGameOver(head) {
+            // Check wall collision
+            if (head.x < 1 || head.x > GRID_SIZE || head.y < 1 || head.y > GRID_SIZE) {
+                return true;
+            }
+            // Check self-collision (excluding the new head itself)
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Increases the game speed slightly after every food eaten.
+         */
+        function increaseSpeed() {
+            // Only increase speed if it's over a certain threshold (e.g., 50ms)
+            if (currentSpeed > 50) {
+                currentSpeed -= 2; // Decrement by a small amount
+                
+                // Clear the existing interval and set a new one with the updated speed
+                clearInterval(gameInterval);
+                gameInterval = setInterval(move, currentSpeed);
+            }
+        }
+
+        /**
+         * Pauses the game loop.
+         */
+        function pauseGame() {
+            clearInterval(gameInterval);
+            gameIsRunning = false;
+        }
+
+        /**
+         * Starts or resumes the main game loop.
+         */
+        function startGame() {
+            if (gameIsRunning) return; // Prevent multiple intervals
+            
+            // If the game was reset, it will start with INITIAL_SPEED
+            gameInterval = setInterval(move, currentSpeed); 
+            gameIsRunning = true;
+            messageBox.style.display = 'none';
+        }
+
+        /**
+         * Stops the game and displays the Game Over message.
+         */
+        function endGame() {
+            pauseGame();
+            finalScoreDisplay.textContent = score;
+            messageBox.style.display = 'block';
+        }
+
+        // --- Event Handlers ---
+
+        /**
+         * Handles arrow key presses for changing direction.
+         */
+        function handleKeydown(e) {
+            const key = e.key;
+            
+            // Prevent snake from reversing immediately
+            if (key === 'ArrowUp' && direction !== 'down') {
+                nextDirection = 'up';
+            } else if (key === 'ArrowDown' && direction !== 'up') {
+                nextDirection = 'down';
+            } else if (key === 'ArrowLeft' && direction !== 'right') {
+                nextDirection = 'left';
+            } else if (key === 'ArrowRight' && direction !== 'left') {
+                nextDirection = 'right';
+            } else if (key === ' ') {
+                e.preventDefault(); // Prevent spacebar from scrolling
+                if (gameIsRunning) {
+                    pauseGame();
+                    // Optionally show a paused message
+                } else if (messageBox.style.display === 'block') {
+                    // If game over, reset and start
+                    resetGame();
+                    startGame();
+                } else {
+                    // Start the game for the first time or from pause
+                    startGame();
+                }
+            }
+        }
+
+        // --- Initialization ---
+
+        // Set up the board layout and event listener
+        setupBoard();
+        document.addEventListener('keydown', handleKeydown);
+
+        // Initial food placement and display
+        resetGame();
+        
+        // Show initial start message
+        finalScoreDisplay.textContent = 0;
+        messageBox.innerHTML = 'Press **Spacebar** to Start!';
+        messageBox.style.display = 'block';
+
+    </script>
+</body>
+</html>

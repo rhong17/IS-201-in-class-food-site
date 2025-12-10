@@ -1,0 +1,75 @@
+body{
+    background-color: rgb(185, 252, 252);
+    color: orange;
+}
+
+
+h1{
+    font-size: 36px;
+    color: rgb(255, 89, 0);
+    text-align: center;
+}
+
+h2{
+    color: blueviolet;
+    text-decoration: underline;
+    font-style: italic;
+    font-weight: bold;
+}
+
+p{
+    font-size: 20px;
+}
+
+#pinkparagraph{
+    color: pink;
+}
+
+.pretty{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.header{
+    z-index: 10;
+}
+
+.common{
+    background-color: aliceblue;
+    border: 2px solid white;
+    position: absolute;
+}
+
+.left{
+    top: 115px;
+    left: 15px;
+    width: 100px;
+    bottom: 40px;
+}
+
+.main{
+    top: 115px;
+    left: 130px;
+    right: 140px;
+    bottom: 40px;
+}
+
+.right{
+    top: 115px;
+    right: 25px;
+    width: 100px;
+    bottom: 40px;
+}
+
+.footer{
+    bottom: 5px;
+    height: 30px;
+    left: 15px;
+    right: 25px;
+    position: fixed;
+    background-color: aliceblue;
+    border: 2px solid white;
+}
+
+.redtext{
+    color: red;
+}
